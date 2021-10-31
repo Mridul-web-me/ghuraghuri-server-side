@@ -23,6 +23,8 @@ async function run() {
         await client.connect();
         const database = client.db('ghuraghuri');
         const packagesCollection = database.collection('packages');
+        const emailCollection = database.collection('serviceEmail');
+
 
 
         // GET API
@@ -32,11 +34,27 @@ async function run() {
             res.send(packages);
         })
 
+        // GET API
+        app.get('/serviceEmail', async (req, res) => {
+            const cursor = emailCollection.find({});
+            const serviceEmail = await cursor.toArray();
+            res.send(serviceEmail);
+        })
+
         // POST API
         app.post('/packages', async (req, res) => {
             const package = req.body;
             console.log('hit the api', package);
             const result = await packagesCollection.insertOne(package);
+            console.log(result);
+            res.json(result)
+        })
+
+        // POST API
+        app.post('/serviceEmail', async (req, res) => {
+            const email = req.body;
+            console.log('hit the api', email);
+            const result = await emailCollection.insertOne(email);
             console.log(result);
             res.json(result)
         })
