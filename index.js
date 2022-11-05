@@ -32,8 +32,14 @@ async function run() {
         app.get('/packages', async (req, res) => {
             const cursor = packagesCollection.find({});
             const packages = await cursor.toArray();
-            res.send(packages);
+            res.json(packages);
         })
+
+        // app.get('/packages', async (req, res) => {
+        //     const cursor = packagesCollection.find({})
+        //     const result = await cursor.toArray()
+        //     res.send(result)
+        // })
 
         // GET API
         app.get('/serviceEmail', async (req, res) => {
